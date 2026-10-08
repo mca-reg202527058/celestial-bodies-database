@@ -1,4 +1,9 @@
--- PostgreSQL database dump for freeCodeCamp Celestial Bodies
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
+-- Dumped by pg_dump version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -11,8 +16,15 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE IF EXISTS universe;
-CREATE DATABASE universe;
+DROP DATABASE universe;
+--
+-- Name: universe; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE universe WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8';
+
+
+ALTER DATABASE universe OWNER TO postgres;
 
 \connect universe
 
@@ -28,7 +40,12 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
+
 SET default_table_access_method = heap;
+
+--
+-- Name: constellation; Type: TABLE; Schema: public; Owner: postgres
+--
 
 CREATE TABLE public.constellation (
     constellation_id integer NOT NULL,
@@ -37,7 +54,12 @@ CREATE TABLE public.constellation (
     is_visible boolean NOT NULL
 );
 
-ALTER TABLE public.constellation OWNER TO freecodecamp;
+
+ALTER TABLE public.constellation OWNER TO postgres;
+
+--
+-- Name: constellation_constellation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
 CREATE SEQUENCE public.constellation_constellation_id_seq
     AS integer
@@ -47,8 +69,19 @@ CREATE SEQUENCE public.constellation_constellation_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.constellation_constellation_id_seq OWNER TO freecodecamp;
+
+ALTER TABLE public.constellation_constellation_id_seq OWNER TO postgres;
+
+--
+-- Name: constellation_constellation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
 ALTER SEQUENCE public.constellation_constellation_id_seq OWNED BY public.constellation.constellation_id;
+
+
+--
+-- Name: galaxy; Type: TABLE; Schema: public; Owner: postgres
+--
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
@@ -60,7 +93,12 @@ CREATE TABLE public.galaxy (
     has_life boolean NOT NULL
 );
 
-ALTER TABLE public.galaxy OWNER TO freecodecamp;
+
+ALTER TABLE public.galaxy OWNER TO postgres;
+
+--
+-- Name: galaxy_galaxy_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
 CREATE SEQUENCE public.galaxy_galaxy_id_seq
     AS integer
@@ -70,21 +108,36 @@ CREATE SEQUENCE public.galaxy_galaxy_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.galaxy_galaxy_id_seq OWNER TO freecodecamp;
+
+ALTER TABLE public.galaxy_galaxy_id_seq OWNER TO postgres;
+
+--
+-- Name: galaxy_galaxy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
 ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 
-CREATE TABLE public.star (
-    star_id integer NOT NULL,
-    galaxy_id integer NOT NULL,
+
+--
+-- Name: moon; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.moon (
+    moon_id integer NOT NULL,
+    planet_id integer NOT NULL,
     name character varying(50) NOT NULL,
-    star_type character varying(30) NOT NULL,
     is_spherical boolean NOT NULL,
     distance_from_earth integer
 );
 
-ALTER TABLE public.star OWNER TO freecodecamp;
 
-CREATE SEQUENCE public.star_star_id_seq
+ALTER TABLE public.moon OWNER TO postgres;
+
+--
+-- Name: moon_moon_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.moon_moon_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -92,8 +145,19 @@ CREATE SEQUENCE public.star_star_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.star_star_id_seq OWNER TO freecodecamp;
-ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
+
+ALTER TABLE public.moon_moon_id_seq OWNER TO postgres;
+
+--
+-- Name: moon_moon_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.moon_moon_id_seq OWNED BY public.moon.moon_id;
+
+
+--
+-- Name: planet; Type: TABLE; Schema: public; Owner: postgres
+--
 
 CREATE TABLE public.planet (
     planet_id integer NOT NULL,
@@ -105,7 +169,12 @@ CREATE TABLE public.planet (
     distance_from_earth integer
 );
 
-ALTER TABLE public.planet OWNER TO freecodecamp;
+
+ALTER TABLE public.planet OWNER TO postgres;
+
+--
+-- Name: planet_planet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
 CREATE SEQUENCE public.planet_planet_id_seq
     AS integer
@@ -115,20 +184,37 @@ CREATE SEQUENCE public.planet_planet_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.planet_planet_id_seq OWNER TO freecodecamp;
+
+ALTER TABLE public.planet_planet_id_seq OWNER TO postgres;
+
+--
+-- Name: planet_planet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
 ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
-CREATE TABLE public.moon (
-    moon_id integer NOT NULL,
-    planet_id integer NOT NULL,
+
+--
+-- Name: star; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.star (
+    star_id integer NOT NULL,
+    galaxy_id integer NOT NULL,
     name character varying(50) NOT NULL,
+    star_type character varying(30) NOT NULL,
     is_spherical boolean NOT NULL,
     distance_from_earth integer
 );
 
-ALTER TABLE public.moon OWNER TO freecodecamp;
 
-CREATE SEQUENCE public.moon_moon_id_seq
+ALTER TABLE public.star OWNER TO postgres;
+
+--
+-- Name: star_star_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.star_star_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -136,14 +222,63 @@ CREATE SEQUENCE public.moon_moon_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.moon_moon_id_seq OWNER TO freecodecamp;
-ALTER SEQUENCE public.moon_moon_id_seq OWNED BY public.moon.moon_id;
+
+ALTER TABLE public.star_star_id_seq OWNER TO postgres;
+
+--
+-- Name: star_star_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
+
+
+--
+-- Name: constellation constellation_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
 
 ALTER TABLE ONLY public.constellation ALTER COLUMN constellation_id SET DEFAULT nextval('public.constellation_constellation_id_seq'::regclass);
+
+
+--
+-- Name: galaxy galaxy_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY public.galaxy ALTER COLUMN galaxy_id SET DEFAULT nextval('public.galaxy_galaxy_id_seq'::regclass);
-ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.star_star_id_seq'::regclass);
-ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('public.planet_planet_id_seq'::regclass);
+
+
+--
+-- Name: moon moon_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY public.moon ALTER COLUMN moon_id SET DEFAULT nextval('public.moon_moon_id_seq'::regclass);
+
+
+--
+-- Name: planet planet_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('public.planet_planet_id_seq'::regclass);
+
+
+--
+-- Name: star star_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.star_star_id_seq'::regclass);
+
+
+--
+-- Data for Name: constellation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.constellation VALUES (1, 'Orion', 'The Hunter', true);
+INSERT INTO public.constellation VALUES (2, 'Ursa Major', 'The Great Bear', true);
+INSERT INTO public.constellation VALUES (3, 'Cassiopeia', 'The Queen', true);
+
+
+--
+-- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: postgres
+--
 
 INSERT INTO public.galaxy VALUES (1, 'Milky Way', 'Our home galaxy', 'Spiral', 13600.5, 0, true);
 INSERT INTO public.galaxy VALUES (2, 'Andromeda', 'Nearest spiral galaxy', 'Spiral', 10000.0, 2500000, false);
@@ -152,25 +287,10 @@ INSERT INTO public.galaxy VALUES (4, 'Sombrero', 'Unusual outer ring', 'Elliptic
 INSERT INTO public.galaxy VALUES (5, 'Whirlpool', 'Interacting grand-design spiral', 'Spiral', 400.0, 23000000, false);
 INSERT INTO public.galaxy VALUES (6, 'Black Eye', 'Dark band of absorbing dust', 'Spiral', 13200.0, 17000000, false);
 
-INSERT INTO public.star VALUES (1, 1, 'Sun', 'Yellow Dwarf', true, 0);
-INSERT INTO public.star VALUES (2, 1, 'Sirius', 'Main Sequence', true, 8);
-INSERT INTO public.star VALUES (3, 1, 'Betelgeuse', 'Red Supergiant', true, 642);
-INSERT INTO public.star VALUES (4, 2, 'Andromeda Star A', 'Blue Giant', true, 2500000);
-INSERT INTO public.star VALUES (5, 3, 'Triangulum Star A', 'Red Dwarf', true, 3000000);
-INSERT INTO public.star VALUES (6, 4, 'Sombrero Star A', 'White Dwarf', true, 29000000);
 
-INSERT INTO public.planet VALUES (1, 1, 'Mercury', 'Terrestrial', false, true, 91);
-INSERT INTO public.planet VALUES (2, 1, 'Venus', 'Terrestrial', false, true, 41);
-INSERT INTO public.planet VALUES (3, 1, 'Earth', 'Terrestrial', true, true, 0);
-INSERT INTO public.planet VALUES (4, 1, 'Mars', 'Terrestrial', false, true, 78);
-INSERT INTO public.planet VALUES (5, 1, 'Jupiter', 'Gas Giant', false, true, 628);
-INSERT INTO public.planet VALUES (6, 1, 'Saturn', 'Gas Giant', false, true, 1275);
-INSERT INTO public.planet VALUES (7, 1, 'Uranus', 'Ice Giant', false, true, 2724);
-INSERT INTO public.planet VALUES (8, 1, 'Neptune', 'Ice Giant', false, true, 4351);
-INSERT INTO public.planet VALUES (9, 2, 'Proxima B', 'Exoplanet', false, true, 4);
-INSERT INTO public.planet VALUES (10, 3, 'Kepler 22b', 'Exoplanet', false, true, 600);
-INSERT INTO public.planet VALUES (11, 4, 'Gliese 581g', 'Exoplanet', false, true, 20);
-INSERT INTO public.planet VALUES (12, 5, 'TRAPPIST 1e', 'Exoplanet', false, true, 40);
+--
+-- Data for Name: moon; Type: TABLE DATA; Schema: public; Owner: postgres
+--
 
 INSERT INTO public.moon VALUES (1, 3, 'Moon', true, 1);
 INSERT INTO public.moon VALUES (2, 4, 'Phobos', false, 78);
@@ -193,31 +313,177 @@ INSERT INTO public.moon VALUES (18, 9, 'ExoMoon 1', false, 4);
 INSERT INTO public.moon VALUES (19, 10, 'ExoMoon 2', false, 600);
 INSERT INTO public.moon VALUES (20, 11, 'ExoMoon 3', false, 20);
 
-INSERT INTO public.constellation VALUES (1, 'Orion', 'The Hunter', true);
-INSERT INTO public.constellation VALUES (2, 'Ursa Major', 'The Great Bear', true);
-INSERT INTO public.constellation VALUES (3, 'Cassiopeia', 'The Queen', true);
+
+--
+-- Data for Name: planet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.planet VALUES (1, 1, 'Mercury', 'Terrestrial', false, true, 91);
+INSERT INTO public.planet VALUES (2, 1, 'Venus', 'Terrestrial', false, true, 41);
+INSERT INTO public.planet VALUES (3, 1, 'Earth', 'Terrestrial', true, true, 0);
+INSERT INTO public.planet VALUES (4, 1, 'Mars', 'Terrestrial', false, true, 78);
+INSERT INTO public.planet VALUES (5, 1, 'Jupiter', 'Gas Giant', false, true, 628);
+INSERT INTO public.planet VALUES (6, 1, 'Saturn', 'Gas Giant', false, true, 1275);
+INSERT INTO public.planet VALUES (7, 1, 'Uranus', 'Ice Giant', false, true, 2724);
+INSERT INTO public.planet VALUES (8, 1, 'Neptune', 'Ice Giant', false, true, 4351);
+INSERT INTO public.planet VALUES (9, 2, 'Proxima B', 'Exoplanet', false, true, 4);
+INSERT INTO public.planet VALUES (10, 3, 'Kepler 22b', 'Exoplanet', false, true, 600);
+INSERT INTO public.planet VALUES (11, 4, 'Gliese 581g', 'Exoplanet', false, true, 20);
+INSERT INTO public.planet VALUES (12, 5, 'TRAPPIST 1e', 'Exoplanet', false, true, 40);
+
+
+--
+-- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.star VALUES (1, 1, 'Sun', 'Yellow Dwarf', true, 0);
+INSERT INTO public.star VALUES (2, 1, 'Sirius', 'Main Sequence', true, 8);
+INSERT INTO public.star VALUES (3, 1, 'Betelgeuse', 'Red Supergiant', true, 642);
+INSERT INTO public.star VALUES (4, 2, 'Andromeda Star A', 'Blue Giant', true, 2500000);
+INSERT INTO public.star VALUES (5, 3, 'Triangulum Star A', 'Red Dwarf', true, 3000000);
+INSERT INTO public.star VALUES (6, 4, 'Sombrero Star A', 'White Dwarf', true, 29000000);
+
+
+--
+-- Name: constellation_constellation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
 
 SELECT pg_catalog.setval('public.constellation_constellation_id_seq', 3, true);
+
+
+--
+-- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
 SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
-SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
-SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
+
+
+--
+-- Name: moon_moon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
 SELECT pg_catalog.setval('public.moon_moon_id_seq', 20, true);
 
-ALTER TABLE ONLY public.constellation ADD CONSTRAINT constellation_name_key UNIQUE (name);
-ALTER TABLE ONLY public.constellation ADD CONSTRAINT constellation_pkey PRIMARY KEY (constellation_id);
 
-ALTER TABLE ONLY public.galaxy ADD CONSTRAINT galaxy_name_key UNIQUE (name);
-ALTER TABLE ONLY public.galaxy ADD CONSTRAINT galaxy_pkey PRIMARY KEY (galaxy_id);
+--
+-- Name: planet_planet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
 
-ALTER TABLE ONLY public.star ADD CONSTRAINT star_name_key UNIQUE (name);
-ALTER TABLE ONLY public.star ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
+SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
 
-ALTER TABLE ONLY public.planet ADD CONSTRAINT planet_name_key UNIQUE (name);
-ALTER TABLE ONLY public.planet ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
 
-ALTER TABLE ONLY public.moon ADD CONSTRAINT moon_name_key UNIQUE (name);
-ALTER TABLE ONLY public.moon ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+--
+-- Name: star_star_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
 
-ALTER TABLE ONLY public.star ADD CONSTRAINT star_galaxy_id_fkey FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
-ALTER TABLE ONLY public.planet ADD CONSTRAINT planet_star_id_fkey FOREIGN KEY (star_id) REFERENCES public.star(star_id);
-ALTER TABLE ONLY public.moon ADD CONSTRAINT moon_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
+SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
+
+
+--
+-- Name: constellation constellation_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.constellation
+    ADD CONSTRAINT constellation_name_key UNIQUE (name);
+
+
+--
+-- Name: constellation constellation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.constellation
+    ADD CONSTRAINT constellation_pkey PRIMARY KEY (constellation_id);
+
+
+--
+-- Name: galaxy galaxy_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_name_key UNIQUE (name);
+
+
+--
+-- Name: galaxy galaxy_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_pkey PRIMARY KEY (galaxy_id);
+
+
+--
+-- Name: moon moon_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_name_key UNIQUE (name);
+
+
+--
+-- Name: moon moon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+
+
+--
+-- Name: planet planet_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_name_key UNIQUE (name);
+
+
+--
+-- Name: planet planet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
+
+
+--
+-- Name: star star_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_name_key UNIQUE (name);
+
+
+--
+-- Name: star star_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
+
+
+--
+-- Name: moon moon_planet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
+
+
+--
+-- Name: planet planet_star_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_star_id_fkey FOREIGN KEY (star_id) REFERENCES public.star(star_id);
+
+
+--
+-- Name: star star_galaxy_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_galaxy_id_fkey FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
